@@ -5,14 +5,10 @@ Project Hackaday
 
 version 1.0 
 
--> Add Blog Entries with vertical pagination.   
-
--> Single Activity multiple fragments.      
-
-    -> Clicking on a item in list launches another fragment which contains the post    
-    
-    -> come up with a project sturcture.    
-    
+    -> Add Blog Entries with vertical pagination.
+    -> Single Activity multiple fragments.
+    -> Clicking on a item in list launches another fragment which contains the post
+    -> come up with a project sturcture
 	-> write documentation. 
 	
 	revision 1.1
@@ -37,4 +33,3 @@ TBD :
 version 4.0   
 
 	-> work on hackaday.io integration ? or a seperate project
-
