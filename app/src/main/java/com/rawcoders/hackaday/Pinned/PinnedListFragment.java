@@ -1,4 +1,4 @@
-package com.rawcoders.hackaday;
+package com.rawcoders.hackaday.Pinned;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import com.rawcoders.hackaday.R;
 
-
-import com.rawcoders.hackaday.dummy.DummyContent;
+import com.rawcoders.hackaday.Pinned.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +24,7 @@ import com.rawcoders.hackaday.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class PinnedItemFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class PinnedListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +49,8 @@ public class PinnedItemFragment extends Fragment implements AbsListView.OnItemCl
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static PinnedItemFragment newInstance(String param1, String param2) {
-        PinnedItemFragment fragment = new PinnedItemFragment();
+    public static PinnedListFragment newInstance(String param1, String param2) {
+        PinnedListFragment fragment = new PinnedListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,7 +62,7 @@ public class PinnedItemFragment extends Fragment implements AbsListView.OnItemCl
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public PinnedItemFragment() {
+    public PinnedListFragment() {
     }
 
     @Override
@@ -82,7 +82,7 @@ public class PinnedItemFragment extends Fragment implements AbsListView.OnItemCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_pinneditem, container, false);
+        View view = inflater.inflate(R.layout.fragment_pinnedlist, container, false);
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);

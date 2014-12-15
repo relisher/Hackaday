@@ -1,7 +1,6 @@
 package com.rawcoders.hackaday;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -18,11 +17,10 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,BlogEntryFragment.OnFragmentInteractionListener,AboutPlusOneFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -53,43 +51,20 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-//                .commit();
-        switch (position)   {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();
+        switch(position)    {
             case 0:
-                mTitle = getString(R.string.title_section1);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, BlogEntryFragment.newInstance(position + 1))
-                        .commit();
                 break;
             case 1:
-                mTitle = getString(R.string.title_section2);
-                fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                    .commit();
                 break;
             case 2:
-                mTitle = getString(R.string.title_section3);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, AboutPlusOneFragment.newInstance(position + 1))
-                        .commit();
                 break;
             case 3:
-                mTitle = getString(R.string.title_section4);
                 System.exit(0);
                 break;
         }
-    }
-
-    @Override
-    public void onFragmentInteraction(String id)    {
-        Toast.makeText(this,"TEST",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri url)  {
-        Toast.makeText(this,"TEST 2", Toast.LENGTH_SHORT).show();
     }
 
     public void onSectionAttached(int number) {
