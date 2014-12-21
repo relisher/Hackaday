@@ -7,8 +7,8 @@
     <com.google.android.gms.plus.PlusOneButton
             xmlns:plus="http://schemas.android.com/apk/lib/com.google.android.gms.plus"
             android:id="@+id/plus_one_button"
-            android:layout_width="130dp"
-            android:layout_height="129dp"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             plus:size="standard"
             plus:annotation="inline" android:layout_gravity="center"/>
 

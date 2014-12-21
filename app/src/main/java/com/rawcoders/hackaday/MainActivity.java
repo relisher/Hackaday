@@ -1,6 +1,7 @@
 package com.rawcoders.hackaday;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,10 +19,12 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.rawcoders.hackaday.About.AboutPlusOneFragment;
+import com.rawcoders.hackaday.Blog.BlogListFragment;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,AboutPlusOneFragment.OnFragmentInteractionListener, BlogListFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -45,21 +49,42 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, BlogListFragment.newInstance("test", "test"))
+                .commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri url)  {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(String id)    {
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
         switch(position)    {
             case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, BlogListFragment.newInstance("test", "test"))
+                        .commit();
                 break;
             case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .commit();
                 break;
             case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, AboutPlusOneFragment.newInstance(position + 1))
+                        .commit();
                 break;
             case 3:
                 System.exit(0);

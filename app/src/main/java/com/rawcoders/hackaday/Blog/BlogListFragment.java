@@ -2,7 +2,7 @@ package com.rawcoders.hackaday.Blog;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import com.rawcoders.hackaday.R;
 
-import com.rawcoders.hackaday.Blog.dummy.DummyContent;
+import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
+import com.rawcoders.hackaday.R;
 
 /**
  * A fragment representing a list of Items.
@@ -75,8 +75,8 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new ArrayAdapter<BlogEntry.BlogItem>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, BlogEntry.ITEMS);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(BlogEntry.ITEMS.get(position).id);
         }
     }
 
