@@ -75,8 +75,12 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         }
 
         // TODO: Change Adapter to display your content
+        // TODO : Load data at run time , write async loaders for loading data.
+        BlogEntry.setUp();
         mAdapter = new ArrayAdapter<BlogEntry.BlogItem>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, BlogEntry.ITEMS);
+        //mAdapter = new ArrayAdapter<BlogEntry.BlogItem>(getActivity(),
+        //        R.layout.blog_list_item, android.R.id.text1, BlogEntry.ITEMS);
     }
 
     @Override
@@ -92,6 +96,12 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         mListView.setOnItemClickListener(this);
 
         return view;
+    }
+
+    public void refreshList()   {
+        //TODO : Notify data set changed.
+        //mAdapter.notify();
+
     }
 
     @Override

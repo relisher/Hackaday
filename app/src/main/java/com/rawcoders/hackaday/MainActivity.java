@@ -40,7 +40,12 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        try {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        catch(NullPointerException exc) {
+            Log.d("Exception",exc.toString());
+        }
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
