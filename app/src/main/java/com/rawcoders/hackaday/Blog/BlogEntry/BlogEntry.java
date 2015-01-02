@@ -1,7 +1,13 @@
 package com.rawcoders.hackaday.Blog.BlogEntry;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 import com.rawcoders.hackaday.Blog.BlogFeedParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -20,7 +26,7 @@ import java.util.Map;
 /**
  * Created by lud on 12/15/2014.
  */
-public class BlogEntry {
+public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     /**
      * An array of sample (dummy) items.
@@ -32,8 +38,16 @@ public class BlogEntry {
      */
     public static Map<String, BlogItem> ITEM_MAP = new HashMap<String, BlogItem>();
 
+    private Context mContext;
+    private int layoutResourceId;
+
     public static String FEED_URL = "http://hackaday.com/blog/feed/?paged="; // + pageID
     public static InputStream FEED_STREAM;
+
+    public BlogEntry(Context mContext, int layoutResourceId)    {
+        super(mContext,layoutResourceId);
+
+    }
 
     static {
         AsyncDownloader ad = new AsyncDownloader();
@@ -49,6 +63,11 @@ public class BlogEntry {
         //Setup async Loading tasks.
     }
 
+    @Override
+    public View getView(int position, View view, ViewGroup parent)   {
+
+    }
+
     public static void addItem(BlogItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
@@ -57,24 +76,20 @@ public class BlogEntry {
     /**
      * A dummy item representing a piece of content.
      */
-    public static class BlogItem {
+    public static class BlogItem{
         public String id;
         public String title;
         public String url;
         public String description;
         public String imgurl;
 
-        public BlogItem()   {
+
+        public BlogItem() {
             this.id = "";
             this.title = "";
             this.url = "";
             this.description = "";
             this.imgurl = "";
-        }
-
-        public BlogItem(String id, String url) {
-            this.id = id;
-            this.url = url;
         }
 
         @Override
