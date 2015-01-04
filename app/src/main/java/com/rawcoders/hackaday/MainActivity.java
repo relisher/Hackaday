@@ -20,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.rawcoders.hackaday.About.AboutPlusOneFragment;
+import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
 import com.rawcoders.hackaday.Blog.BlogListFragment;
 
 
@@ -40,12 +41,10 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        catch(NullPointerException exc) {
-            Log.d("Exception",exc.toString());
-        }
+        Log.w("INIT","Init Main Activity");
+
+        Global.initGlobal(this);
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -54,10 +53,9 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, BlogListFragment.newInstance("test", "test"))
+                .replace(R.id.container, BlogListFragment.newInstance(Global.mAdapter))
                 .commit();
     }
 
@@ -78,7 +76,7 @@ public class MainActivity extends ActionBarActivity
         switch(position)    {
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, BlogListFragment.newInstance("test", "test"))
+                        .replace(R.id.container, BlogListFragment.newInstance(Global.mAdapter))
                         .commit();
                 break;
             case 1:
@@ -92,12 +90,15 @@ public class MainActivity extends ActionBarActivity
                         .commit();
                 break;
             case 3:
+                Global.clearGlobal();
                 System.exit(0);
                 break;
         }
+        onSectionAttached(position + 1);
     }
 
     public void onSectionAttached(int number) {
+        ActionBar actionBar = getSupportActionBar();
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
@@ -112,6 +113,7 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.title_section4);
                 break;
         }
+        actionBar.setTitle(mTitle);
     }
 
     public void restoreActionBar() {

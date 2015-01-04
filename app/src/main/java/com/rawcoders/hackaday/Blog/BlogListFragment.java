@@ -3,6 +3,7 @@ package com.rawcoders.hackaday.Blog;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
+import com.rawcoders.hackaday.Global;
+import com.rawcoders.hackaday.MainActivity;
 import com.rawcoders.hackaday.R;
 
 /**
@@ -32,8 +35,8 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mParam1 = "OLD";
+    private String mParam2 = "OLD";
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,18 +45,13 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
      */
     private AbsListView mListView;
 
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static BlogListFragment newInstance(String param1, String param2) {
+    public static BlogListFragment newInstance(BlogEntry be) {
         BlogListFragment fragment = new BlogListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +60,8 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public BlogListFragment() {
+    public BlogListFragment()   {
+
     }
 
     @Override
@@ -76,9 +75,6 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
 
         // TODO: Change Adapter to display your content
         // TODO : Load data at run time , write async loaders for loading data.
-        BlogEntry.setUp();
-        mAdapter = new ArrayAdapter<BlogEntry.BlogItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, BlogEntry.ITEMS);
         //mAdapter = new ArrayAdapter<BlogEntry.BlogItem>(getActivity(),
         //        R.layout.blog_list_item, android.R.id.text1, BlogEntry.ITEMS);
     }
@@ -90,7 +86,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(Global.mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -101,6 +97,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     public void refreshList()   {
         //TODO : Notify data set changed.
         //mAdapter.notify();
+        Global.mAdapter.notifyDataSetChanged();
 
     }
 
@@ -127,7 +124,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(BlogEntry.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(Global.mAdapter.ITEMS.get(position).id);
         }
     }
 
