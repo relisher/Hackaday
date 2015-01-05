@@ -125,6 +125,7 @@ public class BlogFeedParser {
     private static String readSummary(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "description");
         String summary = readText(parser);
+        summary = android.text.Html.fromHtml(summary).toString();
         parser.require(XmlPullParser.END_TAG, ns, "description");
         return summary;
     }

@@ -87,6 +87,15 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(Global.mAdapter);
+        mListView.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+                Global.mAdapter.loadNext(page);
+                // or customLoadMoreDataFromApi(totalItemsCount);
+            }
+        });
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);

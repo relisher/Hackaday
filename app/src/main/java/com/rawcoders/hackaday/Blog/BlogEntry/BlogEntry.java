@@ -62,6 +62,24 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         }
     }
 
+    public void loadNext(int page)   {
+        AsyncDownloader ad = new AsyncDownloader();
+        Log.d("INIT","Init BlogEntry");
+        try {
+            Object obj[] = new Object[2];
+            obj[0] = this;
+            obj[1] = new URL(FEED_URL + page);
+            ad.execute(obj);
+        }
+        catch(MalformedURLException murl) {
+            Log.d("MURL",murl.toString());
+        }
+        catch(NullPointerException mexc)    {
+            Log.d("NULL", mexc.toString());
+        }
+        Global.mAdapter.notifyDataSetChanged();
+    }
+
     public void setUp()  {
         //Setup async Loading tasks.
     }
@@ -82,7 +100,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         //ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         //txtTitle.setText(web[position]);
         textView1.setText(ITEMS.get(position).title);
-        textView2.setText(ITEMS.get(position).title);
+        textView2.setText(ITEMS.get(position).description);
         //imageView1.setImageBitmap();
         imageView1.setImageResource(R.drawable.ic_action_directions);
         return rowView;
@@ -128,7 +146,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         @Override
         public String toString() {
             String debugO = "";
-            debugO += (id + title + url + imgurl);
+            debugO += (id + " " + android.text.Html.fromHtml(description).toString());
             return debugO;
         }
     }
@@ -149,9 +167,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
                 // Starts the query
                 conn.connect();
                 BlogEntry.FEED_STREAM = conn.getInputStream();
-                String t = "";
-                t += be.ITEMS.size() + 1;
-                be.addItem(new BlogItem(t,"test"));
                 Log.w("ASYNC TASK", "Download Complete");
                 BlogFeedParser.parseXML(be, BlogEntry.FEED_STREAM);
                 Log.w("ASYNC TASK", "Parsing Complete");
