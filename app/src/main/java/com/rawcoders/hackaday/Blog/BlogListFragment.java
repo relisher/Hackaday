@@ -108,12 +108,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     public void refreshList()   {
         //TODO : Notify data set changed.
         //mAdapter.notify();
-        if(Global.mAdapter.ITEMS.size() != 0)   {
-            Global.mAdapter.notifyDataSetChanged();
-        }
-        else {
-            Global.mAdapter.initBlogEntry();
-        }
+        Global.mAdapter.notifyDataSetChanged();
 
 
     }
