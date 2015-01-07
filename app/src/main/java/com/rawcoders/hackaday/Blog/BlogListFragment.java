@@ -97,6 +97,8 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
             }
         });
 
+        refreshList();
+
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
@@ -106,7 +108,13 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     public void refreshList()   {
         //TODO : Notify data set changed.
         //mAdapter.notify();
-        Global.mAdapter.notifyDataSetChanged();
+        if(Global.mAdapter.ITEMS.size() != 0)   {
+            Global.mAdapter.notifyDataSetChanged();
+        }
+        else {
+            Global.mAdapter.initBlogEntry();
+        }
+
 
     }
 
@@ -115,6 +123,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            refreshList();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

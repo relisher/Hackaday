@@ -62,6 +62,23 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         }
     }
 
+    public void initBlogEntry() {
+        AsyncDownloader ad = new AsyncDownloader();
+        Log.d("INIT","Init BlogEntry");
+        try {
+            Object obj[] = new Object[2];
+            obj[0] = this;
+            obj[1] = new URL(FEED_URL);
+            ad.execute(obj);
+        }
+        catch(MalformedURLException murl) {
+            Log.d("MURL",murl.toString());
+        }
+        catch(NullPointerException mexc)    {
+            Log.d("NULL", mexc.toString());
+        }
+    }
+
     public void loadNext(int page)   {
         AsyncDownloader ad = new AsyncDownloader();
         Log.d("INIT","Init BlogEntry");
@@ -109,6 +126,11 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     public void addItem(BlogItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
+    }
+
+    public void clearItems()    {
+        ITEMS.clear();
+        ITEM_MAP.clear();
     }
 
     @Override
