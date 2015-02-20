@@ -3,7 +3,10 @@ package com.rawcoders.hackaday.Blog;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
 
+import android.webkit.WebView;
+import android.widget.Toast;
+import com.rawcoders.hackaday.Global;
 import com.rawcoders.hackaday.R;
 
 /**
@@ -24,12 +30,10 @@ import com.rawcoders.hackaday.R;
 public class BlogDataFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String URI_PARAM = "param1";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String uri;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,16 +41,14 @@ public class BlogDataFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param uri Parameter 1.
      * @return A new instance of fragment BlogDataFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BlogDataFragment newInstance(String param1, String param2) {
+    public static BlogDataFragment newInstance(String uri) {
         BlogDataFragment fragment = new BlogDataFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(URI_PARAM, uri);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,8 +62,7 @@ public class BlogDataFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            uri = getArguments().getString(URI_PARAM);
         }
     }
 
@@ -69,7 +70,22 @@ public class BlogDataFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blog_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_blog_data, container, false);
+
+        WebView webView = (WebView)rootView.findViewById(R.id.webView);
+
+        webView.setInitialScale(1);
+        //webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webView.setScrollbarFadingEnabled(false);
+        Toast toast = Toast.makeText(getActivity(), uri, Toast.LENGTH_SHORT);
+        toast.show();
+        webView.loadUrl(uri);
+
+        return rootView;
+        //return inflater.inflate(R.layout.fragment_blog_data, container, false);
     }
 
     @Override
@@ -79,11 +95,13 @@ public class BlogDataFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(int id) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(id);
         }
     }
+
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -114,7 +132,7 @@ public class BlogDataFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(int id);
     }
 
 }

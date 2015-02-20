@@ -20,12 +20,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.rawcoders.hackaday.About.AboutPlusOneFragment;
+import com.rawcoders.hackaday.Blog.BlogDataFragment;
 import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
 import com.rawcoders.hackaday.Blog.BlogListFragment;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,AboutPlusOneFragment.OnFragmentInteractionListener, BlogListFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,AboutPlusOneFragment.OnFragmentInteractionListener, BlogListFragment.OnFragmentInteractionListener, BlogDataFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -65,8 +66,16 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onFragmentInteraction(String id)    {
+    public void onFragmentInteraction(int id)   {
 
+    }
+
+    @Override
+    public void onFragmentInteraction(String uri)    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, BlogDataFragment.newInstance(uri))
+                .commit();
     }
 
     @Override

@@ -7,11 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
 import com.rawcoders.hackaday.Global;
@@ -106,7 +102,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     public void refreshList()   {
-        //TODO : Notify data set changed.
+        //TODO : Notify data set changed.k
         //mAdapter.notify();
         Global.mAdapter.notifyDataSetChanged();
 
@@ -137,7 +133,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(Global.mAdapter.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(Global.mAdapter.ITEMS.get(position).url);
         }
     }
 
