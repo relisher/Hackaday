@@ -12,5 +12,7 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="projectauthor">lud a.k.a ludkiller</string>
+    <string name="contributors">lud</string>
 
 </resources>
