@@ -2,6 +2,7 @@ package com.rawcoders.hackaday.Blog.BlogEntry;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -119,7 +120,8 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         textView1.setText(ITEMS.get(position).title);
         textView2.setText(ITEMS.get(position).description);
         //imageView1.setImageBitmap();
-        imageView1.setImageResource(R.drawable.ic_action_directions);
+        //imageView1.setImageResource(R.drawable.ic_action_directions);
+        imageView1.setImageDrawable(ITEMS.get(position).thumbnail);
         return rowView;
     }
 
@@ -145,6 +147,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         public String description;
         public String imgurl;
         public String imageID;
+        public Drawable thumbnail;
 
 
         public BlogItem() {
@@ -213,6 +216,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
         @Override
         protected void onProgressUpdate(Integer... progress) {
+            Global.mAdapter.notifyDataSetChanged();
         }
     }
 }

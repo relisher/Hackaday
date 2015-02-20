@@ -1,14 +1,17 @@
 package com.rawcoders.hackaday.Blog;
 
 import android.content.ClipData;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.Xml;
 import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
+import com.rawcoders.hackaday.Global;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Created by lud on 12/22/2014.
@@ -49,6 +52,7 @@ public class BlogFeedParser {
                         if(n.equals("item"))    {
                             Log.e("ADDING",n);
                             be.addItem(readEntry(be,parser));
+                            //Global.mAdapter.notifyDataSetChanged();
                         }
                         else {
                             Log.e("SKIPING IN TITLE : ",n);
@@ -76,8 +80,16 @@ public class BlogFeedParser {
                 blg.url = readLink(parser);
             } else if(name.equals("media:thumbnail")) {
                 blg.imgurl = readImageURL(parser);
-                blg.imageID = blg.imgurl.substring(blg.imgurl.length() - 13, blg.imgurl.length() - 5);
+                Log.w("Image URL : ", blg.imgurl);
+                blg.imageID = blg.imgurl.substring(blg.imgurl.length() - 13, blg.imgurl.length() - 6);
+                URL url;
+                InputStream ps;
+                url = new URL(blg.imgurl);
+                ps = (InputStream) url.getContent();
+                blg.thumbnail = Drawable.createFromStream(ps, "src");
+                Log.w("Image data : ", blg.thumbnail.toString());
                 Log.w("IMG ID", blg.imageID);
+                //Global.mAdapter.notifyDataSetChanged();
             }
             else {
                 skip(parser);
