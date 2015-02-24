@@ -52,7 +52,9 @@ public class BlogFeedParser {
                         if(n.equals("item"))    {
                             Log.e("ADDING",n);
                             be.addItem(readEntry(be,parser));
-                            refereshUI.refreshUI(be.ITEMS.size());
+                            if(be.ITEMS.size() % 7 == 0)    {
+                                refereshUI.refreshUI(be.ITEMS.size());
+                            }
                             //Global.mAdapter.notifyDataSetChanged();
                         }
                         else {
