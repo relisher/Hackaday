@@ -1,6 +1,8 @@
 package com.rawcoders.hackaday.Blog;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -41,7 +43,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
      */
     private AbsListView mListView;
 
-    public ProgressBar pbar;
+    public static ProgressBar mProgressBar;
 
 
     // TODO: Rename and change types of parameters
@@ -81,8 +83,15 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bloglist, container, false);
-        pbar = (ProgressBar) view.findViewById(R.id.progress_bar_only);
+        // Get the Drawable custom_progressbar
+        //Drawable draw=Res.getDrawable(R.drawable.custom_progress_bar);
 
+        // set the drawable as progress drawable
+        //mProgressBar.setProgressDrawable(draw);
+        mProgressBar = (ProgressBar)view.findViewById(R.id.progress_spin);
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#80DAEB"),
+                android.graphics.PorterDuff.Mode.MULTIPLY);
+        Log.w("Progress Bar", mProgressBar.toString());
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(Global.mAdapter);

@@ -2,6 +2,7 @@ package com.rawcoders.hackaday;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.ProgressBar;
 import com.rawcoders.hackaday.Blog.BlogEntry.BlogEntry;
 
 /**
@@ -15,12 +16,15 @@ public class Global {
      */
     public static BlogEntry mAdapter = null;
 
+    //public static ProgressBar mProgressBar = null;
+
     static {
 
     }
 
     public static void initGlobal(Activity context)   {
         mAdapter = new BlogEntry(context,R.layout.blog_list_item);
+        //mProgressBar = (ProgressBar) context.findViewById(R.id.progress_spin);
     }
 
     public static void clearGlobal() {

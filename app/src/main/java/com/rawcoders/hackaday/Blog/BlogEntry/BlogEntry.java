@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.rawcoders.hackaday.Blog.BlogFeedParser;
+import com.rawcoders.hackaday.Blog.BlogListFragment;
 import com.rawcoders.hackaday.Global;
 import com.rawcoders.hackaday.R;
 import org.xmlpull.v1.XmlPullParserException;
@@ -64,6 +65,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     public void initBlogEntry() {
         AsyncDownloader ad = new AsyncDownloader();
+        BlogListFragment.mProgressBar.setVisibility(ProgressBar.VISIBLE);
         Log.d("INIT","Init BlogEntry");
         try {
             Object obj[] = new Object[2];
@@ -81,7 +83,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     public void loadNext(int page)   {
         AsyncDownloader ad = new AsyncDownloader();
-
+        BlogListFragment.mProgressBar.setVisibility(ProgressBar.VISIBLE);
         Log.d("INIT","Init BlogEntry");
         try {
             Object obj[] = new Object[2];
@@ -229,7 +231,13 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
         @Override
         protected void onProgressUpdate(Integer... progress) {
-            Global.mAdapter.notifyDataSetChanged();
+            if(progress[0] == 0 || progress[0] % 7 == 0)    {
+                BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                Global.mAdapter.notifyDataSetChanged();
+            }
+            else {
+                BlogListFragment.mProgressBar.setProgress(progress[0]);
+            }
         }
     }
 }
