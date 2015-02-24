@@ -177,6 +177,11 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     }
 
     public static class AsyncDownloader extends AsyncTask<Object , Integer, Integer>    {
+
+        public interface IRefereshUI {
+            void refreshUI(int progress);
+        }
+
         @Override
         protected Integer doInBackground(Object ... obj) {
             Integer totalSize = 0;
@@ -193,7 +198,12 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
                 conn.connect();
                 BlogEntry.FEED_STREAM = conn.getInputStream();
                 Log.w("ASYNC TASK", "Download Complete");
-                BlogFeedParser.parseXML(be, BlogEntry.FEED_STREAM);
+                BlogFeedParser.parseXML(be, BlogEntry.FEED_STREAM, new IRefereshUI(){
+                    @Override
+                    public void refreshUI(int progress)   {
+                        publishProgress(progress);
+                    }
+                });
                 Log.w("ASYNC TASK", "Parsing Complete");
                 Log.w("ASYNC TASK",be.ITEMS.get(0).toString());
             }
