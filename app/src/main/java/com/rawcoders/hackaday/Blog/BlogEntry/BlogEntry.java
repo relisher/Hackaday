@@ -40,7 +40,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     private Activity mContext;
     private int layoutResourceId;
 
-
     public static String FEED_URL = "http://hackaday.com/blog/feed/?paged="; // + pageID
     public static InputStream FEED_STREAM;
 
@@ -82,6 +81,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     public void loadNext(int page)   {
         AsyncDownloader ad = new AsyncDownloader();
+
         Log.d("INIT","Init BlogEntry");
         try {
             Object obj[] = new Object[2];
@@ -122,6 +122,9 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         //imageView1.setImageBitmap();
         //imageView1.setImageResource(R.drawable.ic_action_directions);
         imageView1.setImageDrawable(ITEMS.get(position).thumbnail);
+
+        //pbar = (ProgressBar) view.findViewById(R.id.progress_bar_only);
+
         return rowView;
     }
 
@@ -178,6 +181,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     public static class AsyncDownloader extends AsyncTask<Object , Integer, Integer>    {
 
+
         public interface IRefereshUI {
             void refreshUI(int progress);
         }
@@ -220,7 +224,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         @Override
         protected void onPostExecute(Integer result) {
             Log.w("onPostExecute","onPostExecute Ran");
-
             Global.mAdapter.notifyDataSetChanged();
         }
 

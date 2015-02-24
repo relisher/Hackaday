@@ -14,5 +14,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="projectauthor">lud a.k.a ludkiller</string>
     <string name="contributors">lud</string>
+    <string name="waitText">waiting</string>
+    <string name="displayText">downloading</string>
 
 </resources>

@@ -41,6 +41,8 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
      */
     private AbsListView mListView;
 
+    public ProgressBar pbar;
+
 
     // TODO: Rename and change types of parameters
     public static BlogListFragment newInstance(BlogEntry be) {
@@ -79,6 +81,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bloglist, container, false);
+        pbar = (ProgressBar) view.findViewById(R.id.progress_bar_only);
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
@@ -92,6 +95,9 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
                 // or customLoadMoreDataFromApi(totalItemsCount);
             }
         });
+
+
+
 
         refreshList();
 
