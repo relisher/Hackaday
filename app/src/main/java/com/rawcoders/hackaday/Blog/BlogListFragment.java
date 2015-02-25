@@ -110,13 +110,10 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
             }
         });
 
-        refreshList();
-
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
+        //view.setFocusableInTouchMode(true);
+        //view.requestFocus();
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

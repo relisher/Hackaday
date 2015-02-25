@@ -86,6 +86,7 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch(position)    {
             case 0:
+                //Global.mAdapter.clearItems();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, BlogListFragment.newInstance(Global.mAdapter))
                         .addToBackStack( null )
@@ -104,6 +105,7 @@ public class MainActivity extends ActionBarActivity
                         .commit();
                 break;
             case 3:
+                Global.mAdapter.clearItems();
                 Global.clearGlobal();
                 System.exit(0);
                 break;

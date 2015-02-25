@@ -61,23 +61,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         }
     }
 
-    public void initBlogEntry() {
-        AsyncDownloader ad = new AsyncDownloader();
-        Log.d("INIT","Init BlogEntry");
-        try {
-            Object obj[] = new Object[2];
-            obj[0] = this;
-            obj[1] = new URL(FEED_URL);
-            ad.execute(obj);
-        }
-        catch(MalformedURLException murl) {
-            Log.d("MURL",murl.toString());
-        }
-        catch(NullPointerException mexc)    {
-            Log.d("NULL", mexc.toString());
-        }
-    }
-
     public void loadNext(int page)   {
         BlogListFragment.mProgressBar.setVisibility(ProgressBar.VISIBLE);
         AsyncDownloader ad = new AsyncDownloader();
@@ -109,20 +92,13 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     public View getView(int position, View view, ViewGroup parent)   {
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         View rowView = inflater.inflate(R.layout.blog_list_item, null, true);
-        //TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
         ScrollingTextView textView1 = (ScrollingTextView) rowView.findViewById(R.id.textView1);
         TextView textView2 = (TextView) rowView.findViewById(R.id.textView2);
         ImageView imageView1 = (ImageView) rowView.findViewById(R.id.imageView1);
-        //ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-        //txtTitle.setText(web[position]);
         textView1.setText(ITEMS.get(position).title);
         textView2.setText(ITEMS.get(position).description);
-        //imageView1.setImageBitmap();
-        //imageView1.setImageResource(R.drawable.ic_action_directions);
         imageView1.setImageDrawable(ITEMS.get(position).thumbnail);
-
-
-        //pbar = (ProgressBar) view.findViewById(R.id.progress_bar_only);
+        textView1.setSelected(true);
 
         return rowView;
     }
@@ -226,16 +202,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
             Global.mAdapter.notifyDataSetChanged();
             BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-            if(progress[0] == 0 || progress[0] % 7 == 0)    {
-                BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-            }
-            else {
-                BlogListFragment.mProgressBar.setProgress(progress[0]);
-            }
         }
     }
 }
