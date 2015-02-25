@@ -191,7 +191,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
             //TODO : Download data here and fill ITEMS
             URL url = (URL)obj[1];
             be = (BlogEntry)obj[0];
-            mBlogItem = be.getList();
+            mBlogItem = new ArrayList<>(be.getList());
 
             try {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -220,8 +220,9 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         protected void onPostExecute(Integer result) {
             Log.w("onPostExecute","onPostExecute Ran");
             be.setList(mBlogItem);
-            BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
             Global.mAdapter.notifyDataSetChanged();
+            BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+
         }
 
         @Override

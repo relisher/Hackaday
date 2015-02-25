@@ -93,9 +93,9 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         mProgressBar = (ProgressBar)view.findViewById(R.id.progress_spin);
         mProgressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#80DAEB"),
                 android.graphics.PorterDuff.Mode.MULTIPLY);
-        //mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         if(Global.mAdapter.ITEMS.size() >= 7) {
-            mProgressBar.setVisibility(ProgressBar.VISIBLE);
+            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         }
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);

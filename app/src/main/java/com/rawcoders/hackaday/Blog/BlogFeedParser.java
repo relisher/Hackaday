@@ -26,22 +26,22 @@ public class BlogFeedParser {
             parser.setInput(is, null);
             parser.nextTag();
             boolean channelFound = false;
-            Log.w("InputStream",is.toString());
+            //Log.w("InputStream",is.toString());
             //parser.require(XmlPullParser.START_TAG, ns, "channel");
             while (parser.next() != XmlPullParser.END_TAG) {
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
-                    Log.e("TEST","continue");
+                    //Log.e("TEST","continue");
                     continue;
                 }
                 String name = parser.getName();
-                Log.e("PARSER NAME",name);
+                //Log.e("PARSER NAME",name);
                 // Starts by looking for the entry tag
                 if (name.equals("channel")) {
-                    Log.w("FOUND CHANNEL",name);
+                    //Log.w("FOUND CHANNEL",name);
                     channelFound = true;
                 }
                 else   {
-                    Log.e("SKIPPING IN CHANNEL : ",name);
+                    //Log.e("SKIPPING IN CHANNEL : ",name);
                     skip(parser);
                 }
                 if(channelFound)   {
@@ -51,11 +51,11 @@ public class BlogFeedParser {
                         }
                         String n = parser.getName();
                         if(n.equals("item"))    {
-                            Log.e("ADDING",n);
+                            //Log.e("ADDING",n);
                             be.add(readEntry(be.size(), parser));
                         }
                         else {
-                            Log.e("SKIPING IN TITLE : ",n);
+                            //Log.e("SKIPING IN TITLE : ",n);
                             skip(parser);
                         }
                     }
@@ -80,22 +80,22 @@ public class BlogFeedParser {
                 blg.url = readLink(parser);
             } else if(name.equals("media:thumbnail")) {
                 blg.imgurl = readImageURL(parser);
-                Log.w("Image URL : ", blg.imgurl);
+                //Log.w("Image URL : ", blg.imgurl);
                 blg.imageID = blg.imgurl.substring(blg.imgurl.length() - 13, blg.imgurl.length() - 6);
                 URL url;
                 InputStream ps;
                 url = new URL(blg.imgurl);
                 ps = (InputStream) url.getContent();
                 blg.thumbnail = Drawable.createFromStream(ps, "src");
-                Log.w("Image data : ", blg.thumbnail.toString());
-                Log.w("IMG ID", blg.imageID);
+                //Log.w("Image data : ", blg.thumbnail.toString());
+                //Log.w("IMG ID", blg.imageID);
                 //Global.mAdapter.notifyDataSetChanged();
             }
             else {
                 skip(parser);
             }
         }
-        Log.e("BLOG DATA", blg.toString());
+        //Log.e("BLOG DATA", blg.toString());
         return blg;
     }
 
