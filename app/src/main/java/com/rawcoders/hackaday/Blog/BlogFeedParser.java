@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by lud on 12/22/2014.
@@ -19,7 +20,7 @@ import java.net.URL;
 public class BlogFeedParser {
     //TODO : write static methods to parse blog feeds and fill up ITEMS :/
     private static String ns = null;
-    public static void parseXML(BlogEntry be, InputStream is, BlogEntry.AsyncDownloader.IRefereshUI refereshUI) throws IOException, XmlPullParserException{
+    public static void parseXML(List<BlogEntry.BlogItem> be, InputStream is, BlogEntry.AsyncDownloader.IRefereshUI refereshUI) throws IOException, XmlPullParserException{
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
@@ -51,9 +52,9 @@ public class BlogFeedParser {
                         String n = parser.getName();
                         if(n.equals("item"))    {
                             Log.e("ADDING",n);
-                            be.addItem(readEntry(be,parser));
-                            if(be.ITEMS.size() % 7 == 0)    {
-                                refereshUI.refreshUI(be.ITEMS.size());
+                            be.add(readEntry(be, parser));
+                            if(be.size() % 7 == 0)    {
+                                refereshUI.refreshUI(be.size());
                             }
                             //Global.mAdapter.notifyDataSetChanged();
                         }
@@ -67,9 +68,9 @@ public class BlogFeedParser {
             }
     }
 
-    private static BlogEntry.BlogItem readEntry(BlogEntry be, XmlPullParser parser)  throws IOException, XmlPullParserException  {
+    private static BlogEntry.BlogItem readEntry(List<BlogEntry.BlogItem> be, XmlPullParser parser)  throws IOException, XmlPullParserException  {
         BlogEntry.BlogItem blg = new BlogEntry.BlogItem();
-        blg.id += (be.ITEMS.size() + 1);
+        blg.id += (be.size() + 1);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;

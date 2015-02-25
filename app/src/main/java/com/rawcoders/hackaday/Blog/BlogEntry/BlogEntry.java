@@ -31,12 +31,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     /**
      * An array of sample (dummy) items.
      */
-    public List<BlogItem> ITEMS = new ArrayList<BlogItem>();
-
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public Map<String, BlogItem> ITEM_MAP = new HashMap<String, BlogItem>();
+    public List<BlogItem> ITEMS = new ArrayList<>();
 
     private Activity mContext;
     private int layoutResourceId;
@@ -48,6 +43,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         super(mContext,layoutResourceId);
         this.mContext = mContext;
         AsyncDownloader ad = new AsyncDownloader();
+
         Log.d("INIT","Init BlogEntry");
         try {
             Object obj[] = new Object[2];
@@ -65,7 +61,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     public void initBlogEntry() {
         AsyncDownloader ad = new AsyncDownloader();
-        BlogListFragment.mProgressBar.setVisibility(ProgressBar.VISIBLE);
         Log.d("INIT","Init BlogEntry");
         try {
             Object obj[] = new Object[2];
@@ -82,8 +77,8 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     }
 
     public void loadNext(int page)   {
-        AsyncDownloader ad = new AsyncDownloader();
         BlogListFragment.mProgressBar.setVisibility(ProgressBar.VISIBLE);
+        AsyncDownloader ad = new AsyncDownloader();
         Log.d("INIT","Init BlogEntry");
         try {
             Object obj[] = new Object[2];
@@ -130,14 +125,16 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         return rowView;
     }
 
-    public void addItem(BlogItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
-    }
-
     public void clearItems()    {
         ITEMS.clear();
-        ITEM_MAP.clear();
+    }
+
+    public List<BlogItem> getList() {
+        return ITEMS;
+    }
+
+    public void setList(List<BlogItem> items)   {
+        this.ITEMS = items;
     }
 
     @Override
@@ -164,6 +161,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
             this.imageID = "";
         }
 
+
         public BlogItem(String id, String title)    {
             this.id = id;
             this.title = title;
@@ -183,6 +181,8 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
     public static class AsyncDownloader extends AsyncTask<Object , Integer, Integer>    {
 
+        List<BlogItem> mBlogItem;
+        BlogEntry be;
 
         public interface IRefereshUI {
             void refreshUI(int progress);
@@ -190,10 +190,14 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
 
         @Override
         protected Integer doInBackground(Object ... obj) {
+
+
             Integer totalSize = 0;
             //TODO : Download data here and fill ITEMS
             URL url = (URL)obj[1];
-            BlogEntry be = (BlogEntry)obj[0];
+            be = (BlogEntry)obj[0];
+            mBlogItem = be.getList();
+
             try {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000 /* milliseconds */);
@@ -204,14 +208,13 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
                 conn.connect();
                 BlogEntry.FEED_STREAM = conn.getInputStream();
                 Log.w("ASYNC TASK", "Download Complete");
-                BlogFeedParser.parseXML(be, BlogEntry.FEED_STREAM, new IRefereshUI(){
+                BlogFeedParser.parseXML(mBlogItem, BlogEntry.FEED_STREAM, new IRefereshUI(){
                     @Override
                     public void refreshUI(int progress)   {
                         publishProgress(progress);
                     }
                 });
                 Log.w("ASYNC TASK", "Parsing Complete");
-                Log.w("ASYNC TASK",be.ITEMS.get(0).toString());
             }
             catch(IOException iox)  {
                 Log.d("IOX", iox.toString());
@@ -226,6 +229,8 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         @Override
         protected void onPostExecute(Integer result) {
             Log.w("onPostExecute","onPostExecute Ran");
+            be.setList(mBlogItem);
+            BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
             Global.mAdapter.notifyDataSetChanged();
         }
 
@@ -233,7 +238,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         protected void onProgressUpdate(Integer... progress) {
             if(progress[0] == 0 || progress[0] % 7 == 0)    {
                 BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                Global.mAdapter.notifyDataSetChanged();
             }
             else {
                 BlogListFragment.mProgressBar.setProgress(progress[0]);

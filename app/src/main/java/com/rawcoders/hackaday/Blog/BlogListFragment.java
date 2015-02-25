@@ -91,7 +91,10 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         mProgressBar = (ProgressBar)view.findViewById(R.id.progress_spin);
         mProgressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#80DAEB"),
                 android.graphics.PorterDuff.Mode.MULTIPLY);
-        Log.w("Progress Bar", mProgressBar.toString());
+        //mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+        if(Global.mAdapter.ITEMS.size() >= 7) {
+            mProgressBar.setVisibility(ProgressBar.VISIBLE);
+        }
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(Global.mAdapter);
@@ -105,9 +108,6 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
             }
         });
 
-
-
-
         refreshList();
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -120,8 +120,6 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         //TODO : Notify data set changed.k
         //mAdapter.notify();
         Global.mAdapter.notifyDataSetChanged();
-
-
     }
 
     @Override
