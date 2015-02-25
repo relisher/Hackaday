@@ -5,4 +5,5 @@
           android:title="@string/visit_us"
           android:orderInCategory="1"
           app:showAsAction="always"/>
+
 </menu>

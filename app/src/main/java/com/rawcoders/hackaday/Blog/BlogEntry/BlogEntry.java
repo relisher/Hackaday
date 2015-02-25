@@ -13,6 +13,8 @@ import com.rawcoders.hackaday.Blog.BlogFeedParser;
 import com.rawcoders.hackaday.Blog.BlogListFragment;
 import com.rawcoders.hackaday.Global;
 import com.rawcoders.hackaday.R;
+import com.rawcoders.hackaday.Utility.ScrollingTextView;
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
@@ -108,7 +110,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         View rowView = inflater.inflate(R.layout.blog_list_item, null, true);
         //TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
-        TextView textView1 = (TextView) rowView.findViewById(R.id.textView1);
+        ScrollingTextView textView1 = (ScrollingTextView) rowView.findViewById(R.id.textView1);
         TextView textView2 = (TextView) rowView.findViewById(R.id.textView2);
         ImageView imageView1 = (ImageView) rowView.findViewById(R.id.imageView1);
         //ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
@@ -118,6 +120,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         //imageView1.setImageBitmap();
         //imageView1.setImageResource(R.drawable.ic_action_directions);
         imageView1.setImageDrawable(ITEMS.get(position).thumbnail);
+
 
         //pbar = (ProgressBar) view.findViewById(R.id.progress_bar_only);
 

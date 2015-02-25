@@ -3,7 +3,7 @@ Hackaday
 
 An android app for browsing hackaday.
 
-[Hackaday Latest Release [Debug]](https://www.dropbox.com/s/szdyrtk1twwedi7/Hackaday-Debug.apk?dl=0)
+[Hackaday Latest Release [Debug]](https://github.com/ludkiller/Hackaday/blob/master/release/Hackaday-Debug.apk?raw=true)
 
 
 

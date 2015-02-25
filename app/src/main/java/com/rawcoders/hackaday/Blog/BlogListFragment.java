@@ -164,6 +164,7 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
+            Log.i("TEST", "TESTIN CLICK");
             mListener.onFragmentInteraction(Global.mAdapter.ITEMS.get(position).url);
         }
     }
