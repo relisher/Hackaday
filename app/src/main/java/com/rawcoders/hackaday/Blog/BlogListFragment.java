@@ -1,11 +1,13 @@
 package com.rawcoders.hackaday.Blog;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,13 +115,29 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.i("ONKEY", "keyCode: " + keyCode);
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    Log.i("ONKEY CHECK", "onKey Back listener is working!!!");
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
         return view;
     }
 
     public void refreshList()   {
         //TODO : Notify data set changed.k
         //mAdapter.notify();
-        Global.mAdapter.notifyDataSetChanged();
+        //Global.mAdapter.notifyDataSetChanged();
     }
 
     @Override

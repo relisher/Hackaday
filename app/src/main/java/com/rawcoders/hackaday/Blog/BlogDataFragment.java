@@ -7,12 +7,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MenuInflater;
+import android.util.Log;
+import android.view.*;
 
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -83,6 +79,22 @@ public class BlogDataFragment extends Fragment {
         Toast toast = Toast.makeText(getActivity(), uri, Toast.LENGTH_SHORT);
         toast.show();
         webView.loadUrl(uri);
+
+        rootView.setFocusableInTouchMode(true);
+        rootView.requestFocus();
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.i("ONKEY", "keyCode: " + keyCode);
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    Log.i("ONKEY CHECK", "onKey Back listener is working!!!");
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
         return rootView;
         //return inflater.inflate(R.layout.fragment_blog_data, container, false);

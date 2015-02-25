@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, BlogListFragment.newInstance(Global.mAdapter))
+                .addToBackStack( null )
                 .commit();
     }
 
@@ -72,10 +73,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onFragmentInteraction(String uri)    {
-        Global.mAdapter.notifyDataSetChanged();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, BlogDataFragment.newInstance(uri))
+                .addToBackStack( null )
                 .commit();
     }
 
@@ -87,16 +88,19 @@ public class MainActivity extends ActionBarActivity
             case 0:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, BlogListFragment.newInstance(Global.mAdapter))
+                        .addToBackStack( null )
                         .commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .addToBackStack( null )
                         .commit();
                 break;
             case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, AboutPlusOneFragment.newInstance(position + 1))
+                        .addToBackStack( null )
                         .commit();
                 break;
             case 3:
