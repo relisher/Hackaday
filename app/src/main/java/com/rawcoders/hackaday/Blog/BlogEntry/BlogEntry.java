@@ -92,7 +92,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         catch(NullPointerException mexc)    {
             Log.d("NULL", mexc.toString());
         }
-        Global.mAdapter.notifyDataSetChanged();
     }
 
     public void setUp()  {
@@ -184,10 +183,6 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         List<BlogItem> mBlogItem;
         BlogEntry be;
 
-        public interface IRefereshUI {
-            void refreshUI(int progress);
-        }
-
         @Override
         protected Integer doInBackground(Object ... obj) {
 
@@ -208,12 +203,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
                 conn.connect();
                 BlogEntry.FEED_STREAM = conn.getInputStream();
                 Log.w("ASYNC TASK", "Download Complete");
-                BlogFeedParser.parseXML(mBlogItem, BlogEntry.FEED_STREAM, new IRefereshUI(){
-                    @Override
-                    public void refreshUI(int progress)   {
-                        publishProgress(progress);
-                    }
-                });
+                BlogFeedParser.parseXML(mBlogItem, BlogEntry.FEED_STREAM);
                 Log.w("ASYNC TASK", "Parsing Complete");
             }
             catch(IOException iox)  {

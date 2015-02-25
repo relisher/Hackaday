@@ -20,7 +20,7 @@ import java.util.List;
 public class BlogFeedParser {
     //TODO : write static methods to parse blog feeds and fill up ITEMS :/
     private static String ns = null;
-    public static void parseXML(List<BlogEntry.BlogItem> be, InputStream is, BlogEntry.AsyncDownloader.IRefereshUI refereshUI) throws IOException, XmlPullParserException{
+    public static void parseXML(List<BlogEntry.BlogItem> be, InputStream is) throws IOException, XmlPullParserException{
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
@@ -52,11 +52,7 @@ public class BlogFeedParser {
                         String n = parser.getName();
                         if(n.equals("item"))    {
                             Log.e("ADDING",n);
-                            be.add(readEntry(be, parser));
-                            if(be.size() % 7 == 0)    {
-                                refereshUI.refreshUI(be.size());
-                            }
-                            //Global.mAdapter.notifyDataSetChanged();
+                            be.add(readEntry(be.size(), parser));
                         }
                         else {
                             Log.e("SKIPING IN TITLE : ",n);
@@ -68,9 +64,9 @@ public class BlogFeedParser {
             }
     }
 
-    private static BlogEntry.BlogItem readEntry(List<BlogEntry.BlogItem> be, XmlPullParser parser)  throws IOException, XmlPullParserException  {
+    private static BlogEntry.BlogItem readEntry(int oldId, XmlPullParser parser)  throws IOException, XmlPullParserException  {
         BlogEntry.BlogItem blg = new BlogEntry.BlogItem();
-        blg.id += (be.size() + 1);
+        blg.id += (oldId + 1);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
