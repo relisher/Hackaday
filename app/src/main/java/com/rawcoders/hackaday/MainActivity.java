@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
         Global.initGlobal(this);
         Log.w("INIT","Init Main Activity");
-
+        Global.mAdapter.init();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -78,6 +78,7 @@ public class MainActivity extends ActionBarActivity
                 .replace(R.id.container, BlogDataFragment.newInstance(uri))
                 .addToBackStack( null )
                 .commit();
+        Global.mAdapter.clearItems();
     }
 
     @Override
@@ -97,12 +98,14 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                         .addToBackStack( null )
                         .commit();
+                Global.mAdapter.clearItems();
                 break;
             case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, AboutPlusOneFragment.newInstance(position + 1))
                         .addToBackStack( null )
                         .commit();
+                Global.mAdapter.clearItems();
                 break;
             case 3:
                 Global.mAdapter.clearItems();

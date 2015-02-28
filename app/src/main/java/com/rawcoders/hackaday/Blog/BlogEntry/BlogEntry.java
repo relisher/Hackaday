@@ -44,6 +44,10 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     public BlogEntry(Activity mContext, int layoutResourceId)    {
         super(mContext,layoutResourceId);
         this.mContext = mContext;
+
+    }
+
+    public void init()  {
         AsyncDownloader ad = new AsyncDownloader();
 
         Log.d("INIT","Init BlogEntry");
@@ -64,7 +68,7 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
     public void loadNext(int page)   {
         BlogListFragment.mProgressBar.setVisibility(ProgressBar.VISIBLE);
         AsyncDownloader ad = new AsyncDownloader();
-        Log.d("INIT","Init BlogEntry");
+        Log.d("LoadNextPage","Loading next Page");
         try {
             Object obj[] = new Object[2];
             obj[0] = this;
@@ -162,6 +166,10 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
         List<BlogItem> mBlogItem;
         BlogEntry be;
 
+        public interface IRefereshUI {
+            public void refereshUI();
+        }
+
         @Override
         protected Integer doInBackground(Object ... obj) {
 
@@ -182,7 +190,12 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
                 conn.connect();
                 BlogEntry.FEED_STREAM = conn.getInputStream();
                 Log.w("ASYNC TASK", "Download Complete");
-                BlogFeedParser.parseXML(mBlogItem, BlogEntry.FEED_STREAM);
+                BlogFeedParser.parseXML(mBlogItem, BlogEntry.FEED_STREAM,new IRefereshUI(){
+                    @Override
+                    public void refereshUI()    {
+                        publishProgress();
+                    }
+                });
                 Log.w("ASYNC TASK", "Parsing Complete");
             }
             catch(IOException iox)  {
@@ -202,6 +215,12 @@ public class BlogEntry extends ArrayAdapter<BlogEntry.BlogItem>{
             Global.mAdapter.notifyDataSetChanged();
             BlogListFragment.mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress)   {
+            be.setList(mBlogItem);
+            Global.mAdapter.notifyDataSetChanged();
         }
     }
 }

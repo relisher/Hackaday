@@ -28,6 +28,5 @@ public class Global {
     }
 
     public static void clearGlobal() {
-
     }
 }

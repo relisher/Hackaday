@@ -70,4 +70,9 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         // Don't take any action on changed
     }
+
+    public void setPage(int page)   {
+        this.currentPage = page;
+        this.startingPageIndex = page;
+    }
 }

@@ -98,17 +98,17 @@ public class BlogListFragment extends Fragment implements AbsListView.OnItemClic
             mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         }
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        mListView.setAdapter(Global.mAdapter);
-        mListView.setOnScrollListener(new EndlessScrollListener() {
+
+
+        EndlessScrollListener elistener = new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
                 Global.mAdapter.loadNext(page);
-                // or customLoadMoreDataFromApi(totalItemsCount);
             }
-        });
+        };
+        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView.setAdapter(Global.mAdapter);
+        mListView.setOnScrollListener(elistener);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
