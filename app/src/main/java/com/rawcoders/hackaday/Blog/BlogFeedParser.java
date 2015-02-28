@@ -20,7 +20,7 @@ import java.util.List;
 public class BlogFeedParser {
     //TODO : write static methods to parse blog feeds and fill up ITEMS :/
     private static String ns = null;
-    public static void parseXML(List<BlogEntry.BlogItem> be, InputStream is, BlogEntry.AsyncDownloader.IRefereshUI rUI) throws IOException, XmlPullParserException{
+    public static void parseXML(List<BlogEntry.BlogItem> be, InputStream is) throws IOException, XmlPullParserException{
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
@@ -53,7 +53,6 @@ public class BlogFeedParser {
                         if(n.equals("item"))    {
                             //Log.e("ADDING",n);
                             be.add(readEntry(be.size(), parser));
-                            rUI.refereshUI();
                         }
                         else {
                             //Log.e("SKIPING IN TITLE : ",n);
